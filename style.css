@@ -1,0 +1,203 @@
+
+
+@media (max-width: 767.98px) {
+
+    #search_box{
+        position:relative; margin:0 auto;width:95%; border:5px solid gray; background:#eeeeee;
+    }
+
+}
+
+@media (min-width: 767.98px) {
+
+    #search_box{
+        position:relative; margin:0 auto;width:60%; border:5px solid gray; background:#eeeeee;
+    }
+
+}
+
+
+
+
+.btn.btn-default:focus {
+    outline:0;
+    background-color: white;
+}
+
+
+
+
+.page-detail.ng-enter 		{
+    -webkit-animation:slideInLeft 0.5s both ease-in;
+    -moz-animation:slideInLeft 0.5s both ease-in;
+    animation:slideInLeft 0.5s both ease-in;
+}
+
+.page-list.ng-enter 		{
+    -webkit-animation:slideInRight 0.5s both ease-in;
+    -moz-animation:slideInRight 0.5s both ease-in;
+    animation:slideInRight 0.5s both ease-in;
+}
+/* contact ---------------------- */
+
+
+
+
+/* slide in from the right */
+@keyframes slideInRight {
+    from 	{ transform:translateX(100%); }
+    to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInRight {
+    from 	{ -moz-transform:translateX(100%); }
+    to 		{ -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInRight {
+    from 	{ -webkit-transform:translateX(100%); }
+    to 		{ -webkit-transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from 	{ transform:translateX(-100%); }
+    to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInLeft {
+    from 	{ -moz-transform:translateX(-100%); }
+    to 		{ -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInLeft {
+    from 	{ -webkit-transform:translateX(-100%); }
+    to 		{ -webkit-transform: translateX(0); }
+}
+
+@media (max-width: 767.98px) {
+    #listTableContainner {
+        overflow-x: scroll;
+    }
+}
+
+
+/****/
+/**  detail start here **/
+.star-ratings-css {
+    font-family: "";
+    color: white;
+    font-size: 15px;
+    height: 15px;
+    width: 75px;
+
+    position: relative;
+    padding: 0;
+    margin:0;
+
+    left:5%;
+    text-shadow: 0px 0px 0 white;
+    /*background-color: blue;*/
+
+
+}
+
+.star-ratings-css-top {
+    color: #e7711b;
+    margin:0;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+
+
+@media (max-width: 767.98px) {
+    .star-ratings-css{
+        left:30px;
+    }
+    /*.st{*/
+        /*font-size:17px;*/
+    /*}*/
+}
+
+
+
+@media (max-width: 767.98px) {
+    #detailContainer {
+        width:96%;
+        margin:0 auto;
+    }
+}
+@media (min-width: 767.98px) {
+    #detailContainer {
+        width:80%;
+        margin:0 auto;
+    }
+}
+
+@media (min-width: 767.98px) {
+    #routeButton {
+        margin-top:25px;
+    }
+}
+@media (max-width: 767.98px) {
+    #routeButton {
+
+        margin-top:10px;
+    }
+}
+
+
+
+/* Create two equal columns that floats next to each other */
+.column1 {
+    float: left;
+    /*width: 25%;*/
+    padding: 10px;
+}
+
+.column1 img {
+    margin-top: 12px;
+}
+
+/* Clear floats after the columns */
+#map {
+   width:100%;
+    height:600px;
+    margin:0 auto;
+    position:relative;
+
+}
+
+.rounded-circle{
+    width:200px;
+    height:200px;
+}
+
+.fadeR {
+    transition: all linear 1500ms;
+    opacity: 1;
+}
+
+.fadeR.ng-hide {
+    opacity: 0;
+    transition: all linear 0ms;
+}
+
+
+.hoverGrays :hover { background: lightgray; }
+
+/*.highlightCell:hover { background: lightgray; }*/
+
+/*.highlightCell{*/
+    /*background-color: #fdde95;*/
+/*}*/
+.alertsp{
+    width:80%;
+    margin:0 auto;
+}
+
+
+   .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{
+       background-color: #ececec!important;
+   }

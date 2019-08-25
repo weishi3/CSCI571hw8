@@ -1,0 +1,307 @@
+
+<div data-ng-init="initDetail()" id="detailContainer">
+<h1 style="margin:0 auto; text-align:center;">{{placeDetail.name}}</h1>
+<!--div id="tweetContainer"></div-->
+    <a style="float:right;width:40px; height:40px;" id="tweetContainer"class="twitter-share-button"
+       href="">
+        <img id="tweetImage" style="cursor:not-allowed; opacity:0.6; height:40px; width:40px; "src="testImage/Twitter.png"></a>
+
+    <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';" style="margin-bottom: 20px; background:white;" class="btn btn-light border"  ng-click="toListFromDetail()" id="toList2"> &lt;List </button>
+
+    <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';"  style="background-color:white;float:right; border: 2px solid gray; width:40px; height:40px; position:relative; margin-right:10px;" ng-disabled="!placeDetail"  ng-show="highlightedBriefInfo.loveOrNot" ng-click='RFavorInDetail()'>
+
+        <!--i id="FON{{cpSearchResultJson.indexOf(placeJson)}}" style="width:24px; height:24px;color:{{placeJson['starColor']}} " class="{{placeJson['loveOrNot']}}"></i-->
+        <i  style="color:gold; position:absolute; width:16px; height:16px; left:10px; top:10px;" class="fas fa-star"></i>
+
+
+    </button>
+
+    <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';" style="background-color:white;float:right; border: 2px solid gray; width:40px; height:40px;position:relative;  margin-right:10px;" ng-disabled="!placeDetail" ng-show="!highlightedBriefInfo.loveOrNot" ng-click='AFavorInDetail()'>
+
+        <i  style="color:black;position:absolute; width:16px; height:16px; left:10px; top:10px;" class="far fa-star"></i>
+
+    </button>
+
+<div style="margin-top:30px;">
+
+<ul class="nav nav-tabs justify-content-end" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active"  data-toggle="tab" data-target="#tab0" href role="tab" aria-controls="tab0" aria-selected="true" ng-click="changeTab(0)">Info</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" data-target="#tab1" href role="tab" aria-controls="tab1" aria-selected="false" ng-click="changeTab(1)">Photos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"  data-toggle="tab" data-target="#tab2" href role="tab" aria-controls="tab2" aria-selected="false" ng-click="changeTab(2)">Map</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"  data-toggle="tab" data-target="#tab3" href role="tab" aria-controls="tab3" aria-selected="false" ng-click="changeTab(3)">Reviews</a>
+    </li>
+</ul>
+
+</div>
+<div class="tab-content" >
+
+<div class="tab-pane fade show active" role="tabpanel" id="tab0">
+    <div ng-show="!placeDetail" class="alert alert-danger" role="alert">
+        Failed to get Info.
+    </div>
+    <div class="container" ng-show="placeDetail">
+        <div  style=" width:100%; white-space:nowrap; overflow:auto;" id="detailTableContainer" >
+        <table class="table table-striped">
+            <thead>
+            <tr style="display:none">
+                <th>title</th>
+                <th>content</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="placeDetail.formatted_address">
+                <td>Address </td>
+                <td>{{placeDetail.formatted_address}}</td>
+            </tr>
+            <tr ng-if="placeDetail.international_phone_number">
+                <td>Phone Number</td>
+                <td>{{placeDetail.international_phone_number}}</td>
+            </tr>
+            <tr ng-if="placeDetail.price_level">
+                <td>Price Level</td>
+                <!--0 ok-->
+                <td><span ng-repeat="i in getNumber(placeDetail.price_level)">$</span></td>
+            </tr>
+            <tr ng-if="placeDetail.rating">
+                <td>Rating</td>
+                <td style="position:relative">
+                    <p style="position:absolute" >{{placeDetail.rating}}</p>
+                    <div class="star-ratings-css">
+                        <!--ng-style="{'width' : starPercentStr}"-->
+                        <div class="star-ratings-css-top" ng-style="{'width' : starPercentStr}" ><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span></div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="placeDetail.url">
+                <td>Google Page</td>
+                <td><a target="_blank" ng-href="{{placeDetail.url}}">{{placeDetail.url}}</a></td>
+            </tr>
+            <tr ng-if="placeDetail.website">
+                <td>Website</td>
+                <td><a target="_blank" ng-href="{{placeDetail.website}}">{{placeDetail.website}}</a></td>
+            </tr>
+            <tr ng-if="placeDetail.opening_hours">
+                <td>Hours</td>
+                <td>{{hourStr}} <a style="color:#007bff;"data-toggle="modal" data-target="#myModal">Daily open hours</a></td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+        </div>
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">Open hours</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>{{todayHours.split(": ")[0]}}</th>
+                                    <th>{{todayHours.split(": ")[1]}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="otherDay in otherHours">
+                                    <td>{{otherDay.split(": ")[0]}}</td>
+                                    <td>{{otherDay.split(": ")[1]}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+    </div>
+
+</div>
+
+<div  class="tab-pane fade" role="tabpanel" id="tab1">
+    <div ng-show="placeDetail&&placeDetail.photos && placeDetail.photos.length>0" class="row1">
+        <div class="column1 col-md-3" id="column10">
+
+        </div>
+        <div class="column1 col-md-3" id="column11">
+
+
+        </div>
+        <div class="column1 col-md-3" id="column12">
+
+        </div>
+        <div class="column1 col-md-3" id="column13">
+
+
+        </div>
+    </div>
+    <div ng-show="placeDetail&&(!placeDetail.photos|| !placeDetail.photos.length>0)" class="alert alert-warning" role="alert">
+        No records.
+    </div>
+    <div ng-show="!placeDetail" class="alert alert-danger" role="alert">
+        Failed to get photos.
+    </div>
+</div>
+
+<div class="tab-pane fade" role="tabpanel" id="tab2">
+
+
+    <form id="routeForm" ng-submit="showRoute()">
+        <div class="form-row">
+            <div class="col-md-4 mb-1" >
+                <label for="selectStart" class="mb-1 mt-2">From</label>
+                <input type="text" class="form-control" id="selectStart"  name="startLocation" ng-model="checkFrom" placeholder="input start location" ng-value="defaultStartLocation" required>
+
+            </div>
+            <div class="col-md-4 mb-1">
+                <label for="fixedTarget" class="mb-1 mt-2">To</label>
+                <input type="text" class="form-control" id="fixedTarget" name="endLocation"   ng-value="placeDetail?(placeDetail.name+','+placeDetail.formatted_address):(highlightedBriefInfo.name+','+highlightedBriefInfo.vicinity)" disabled>
+
+            </div>
+            <div class="col-md-2 mb-1">
+                <label for="selectTravelMode"  class="mb-1 mt-2">Travel Mode</label>
+
+                <select class="form-control" id="selectTravelMode" name="travelMode">
+                    <option value="DRIVING">Driving</option>
+                    <option value="BICYCLING">Bicycling</option>
+                    <option value="TRANSIT">Transit</option>
+                    <option value="WALKING">Walking</option>
+
+                </select>
+            </div>
+            <div class="col-md-2 mt-2 mb-1">
+
+                <button ng-disabled="!checkFrom" type="submit" id="routeButton" class="btn btn-primary mb-2">Get Direction</button>
+            </div>
+        </div>
+
+
+
+    </form>
+
+    <img class="border" ng-show="!badStartDirection" id="toggleButton" src="testImage/Pegman.png" style="margin:0px; width:40px;height:40px;" ng-click="toggle()">
+    <!--div id="toggle"-->
+        <div ng-show="!badStartDirection" id="map"> </div>
+    <div ng-show="badStartDirection" class="alert alert-danger" role="alert">
+        Failed to get direction!
+    </div>
+        <!--div id="streetView"></--div>
+    </div-->
+
+    <div  id="routesPanel"></div>
+
+
+
+
+</div>
+<div class="tab-pane fade" role="tabpanel" id="tab3">
+
+    <div ng-show="!placeDetail" class="alert alert-danger" role="alert">
+        Failed to get Reviews.
+    </div>
+
+    <div ng-show="placeDetail">
+        <div class="mt-3 mb-3">
+    <span class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="gOY" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Google reviews
+        </button>
+        <div class="dropdown-menu" aria-labelledby="gOY">
+            <a class="dropdown-item" ng-click="isGoogleReview=true;setGoogleReview('Google reviews'); ">Google reviews</a>
+            <a class="dropdown-item" ng-click="isGoogleReview=false; setGoogleReview('Yelp reviews');">Yelp reviews</a>
+        </div>
+
+    </span>
+
+    <span class="dropdown" >
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Default Order
+        </button>
+        <div class="dropdown-menu" aria-labelledby="sortButton">
+            <a class="dropdown-item" ng-click="setOrder('Default Order')">Default Order</a>
+            <a class="dropdown-item" ng-click="setOrder('Highest Rating')">Highest Rating</a>
+            <a class="dropdown-item" ng-click="setOrder('Lowest Rating')">Lowest Rating</a>
+            <a class="dropdown-item" ng-click="setOrder('Most Recent')">Most Recent</a>
+            <a class="dropdown-item" ng-click="setOrder('Least Recent')">Least Recent</a>
+        </div>
+
+    </span>
+
+        </div>
+    <table class="table fadeR" ng-show="isGoogleReview && rvs.length>0">
+        <thead>
+        <tr style="display:none">
+            <th>GOOGLEphoto</th>
+            <th>content</th>
+        </tr>
+        </thead>
+        <tbody id="GoogleReviewBody">
+        <tr ng-repeat="rv in rvs" class="border row mb-2">
+            <td class="col-2 col-md-1 mb-2"><a target="_blank" href="{{rv.author_url}}"><img style="width: 100%;" ng-src="{{rv.profile_photo_url}}"></a> </td>
+            <td class="col-10 col-md-11 mb-2"><a target="_blank" href="{{rv.author_url}}"><p style="margin-bottom:4px;">{{rv.author_name}}</p></a>
+                <p style="color:gray;font-size:15px;margin-bottom:5px;"><span ng-repeat="i in getNumber(rv.rating)"style=" color: #e7711b;">★</span>{{rvTimes[rvs.indexOf(rv)]}}</p>
+                <p style="font-size:13px;margin-bottom:5px;">{{rv.text}}</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div ng-show="isGoogleReview && rvs.length==0" class="alert alert-warning" role="alert">
+        No records.
+    </div>
+
+        <div ng-show="!isGoogleReview &&yelpError&&!fetchYelp" class="alert alert-danger" role="alert">
+            Failed to get Yelp Reviews.
+        </div>
+
+        <div style="width:80%; margin:0 auto;" class="progress" ng-show="!isGoogleReview && fetchYelp">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+        </div>
+    <div ng-show="!isGoogleReview && yelpReviews.length==0 &&!yelpError&&!fetchYelp" class="alert alert-warning" role="alert">
+        No records.
+    </div>
+    <table class="table fadeR" ng-show="!isGoogleReview && yelpReviews.length>0&&!fetchYelp">
+        <thead>
+        <tr style="display:none">
+            <th>YELPphoto</th>
+            <th>content</th>
+        </tr>
+        </thead>
+        <tbody id="yelpReviewBody">
+        <tr ng-repeat="rv in yelpReviews" class="border row mb-2">
+            <td class="col-2 col-md-1 mb-2"><a target="_blank" href="{{rv.url}}"><img style="width:62.33px; height:62.33px;" class='rounded-circle' ng-src="{{rv.user.image_url}}"> </a></td>
+            <td class="col-10 col-md-11 mb-2"><a target="_blank" href="{{rv.url}}"><p  style="margin-bottom:4px;">{{rv.user.name}}</p></a>
+                <p  style="color:gray;font-size:15px;margin-bottom:5px;"><span ng-repeat="i in getNumber(rv.rating)" style=" color: #e7711b;">★</span>{{rv.time_created}}</p>
+                <p  style="font-size:13px;margin-bottom:5px;">{{rv.text}}</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>
+
+</div>
+</div>

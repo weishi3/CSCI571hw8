@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9B2j1QeDz4ldRWdxSzrVcMYVTJcvhZ8A&libraries=places"></script>
+<script src="search.js"></script>
+
+<!--script when including place, include this?
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9B2j1QeDz4ldRWdxSzrVcMYVTJcvhZ8A">
+</script-->
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="style.css">
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body  ng-app="myApp" ng-controller="myCtrl">
+
+
+
+<div style="font-size:14px;" id="search_box"  class="container">
+    <p style="margin-top:10px; margin-bottom:10px; font-size:20px; font-style:italic; text-align:center;">Travel and Entertainment Search</p>
+
+
+
+    <FORM id="form" ng-submit="mySubmitFunction()">
+
+
+        <div class="form-group row mb-1">
+
+            <span  class="col-md-2 col-sm-1"></span>
+            <label for="keyword" class="col-md-2 col-sm-2 col-form-label">Keyword:<p style="display:inline; color:red;">*</p></label>
+            <span class="col-md-1 col-sm-1"></span>
+            <div class=" col-sm-8 col-md-5">
+            <INPUT id="keyword"  class="form-control"  style="height:30px;" ng-blur="detectKeywordB()" ng-keyup="detectKeywordK()"  value="ini" NAME=keyword>
+                <p id="keywordAlert" style="color:red; display:none;">Please enter a key word.<br></p>
+            </div>
+
+
+        </div>
+
+        <!--b>Keyword:</b> <INPUT id="keyword" style="border:1px solid gray" onkeyup="detectKeyword(this)"  NAME=keyword><BR>
+        <p id="keywordAlert" style="color:red; display:none;">Please enter a key word.<br></p-->
+
+        <!--span id="tooltiptext1" >Please fill out this field!</span-->
+        <div class="form-group row mb-1">
+            <span class="col-md-2"></span>
+            <label for="category" class="col-md-2 col-form-label">Category:</label>
+            <span class="col-md-1"></span>
+            <div class="col-md-3">
+                <select name="category" style="height:35px;" class="form-control" id="category">
+                <option  value="">default</option>
+                <option  value="airport">Airport</option>
+                <option  value="aquarium">Aquarium</option>
+                <option  value="art_gallery">Art Gallery</option>
+                <option  value="bakery">Bakery</option>
+                <option  value="bar">Bar</option>
+                <option  value="beauty_salon">Beauty Salon</option>
+                <option value="bowling_alley">Bowling Alley</option>
+                <option  value="bus_station">Bus Station</option>
+                <option  value="cafe">Cafe</option>
+                <option value="campground">Campground</option>
+                <option value="car_rental">Car Rental</option>
+                <option value="casino">Casino</option>
+                <option value="lodging">Lodging</option>
+                <option value="movie_theatre">Movie Theatre</option>
+                <option value="museum">Museum</option>
+                <option value="night_club">Night Club</option>
+                <option value="park">Park</option>
+                <option value="parking">Parking</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="shopping_mall">Shopping Mall</option>
+                <option value="stadium">Stadium</option>
+                <option value="subway_station">Subway Station</option>
+                <option value="taxi_stand">Taxi Stand</option>
+                <option value="train_station">Train Station</option>
+                <option value="transit_station">Transit Station</option>
+                <option value="travel_agency">Travel Agency</option>
+                <option value="zoo">Zoo</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row mb-1">
+            <span class="col-md-2"></span>
+            <label for="distance" class="col-md-2 col-form-label">Distance(miles)</label>
+            <span class="col-md-1"></span>
+            <div class="col-md-3">
+                <INPUT id="distance" style="height:30px;" class="form-control"   NAME=distance placeholder="10">
+            </div>
+        </div>
+
+
+        <fieldset class="form-group mb-1">
+            <div class="row">
+                <span class=" col-md-2"></span>
+                <label class=" col-md-2 col-form-label pt-0">From<p style="display:inline; color:red;">*</p></label>
+                <span class=" col-md-1"></span>
+                <div class="col-md-5">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="selectcenter" id="sethere" value="here" ng-model="checkValue" checked ng-change="findselected()">
+                        <label class="form-check-label" for="sethere">
+                            Current Location
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="selectcenter" id="setother" ng-model="checkValue" value="other" ng-change="findselected()">
+                        <label class="form-check-label" for="setother">
+                            Other.Please specify:
+                        </label>
+                        <input style="height:30px;" class="form-control" for="setother" NAME=place placeholder="location" id="input_location" disabled ng-blur="detect_inputLocationB()" ng-keyup="detect_inputLocationK()">
+                        <p id="input_locationAlert" style="color:red; display:none;">Please enter a key word.<br></p>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row mb-0">
+            <span class="col-md-2"></span>
+            <button id="submit" ng-disabled="!userGeoOK||!keywordOK||!inputCenterOK" style="margin:15px;margin-top:0px;" type="submit" class="btn btn-primary"><i class="fas fa-search"></i>Search</button>
+            <button id="clear" class="btn btn-light border" type="reset" style="margin:15px;margin-left:0px;margin-top:0px;" ng-click="clear()">Clear</button>
+
+        </div>
+
+
+
+        <!--INPUT TYPE=submit name="submit" id="submit" value="Search"  disabled style="position:relative; left:50px"-->
+
+
+
+    </FORM>
+
+</div>
+
+<ul  class="nav nav-pills mb-3 mt-2 justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-result-tab"  data-toggle="pill" href="" ng-click="requestResult()"  role="tab"  aria-selected="true">Results</a>
+
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-favor-tab"  data-toggle="pill" ng-click="iniFavor()"  href="#!favorList" role="tab"  aria-selected="false">Favorites</a>
+    </li>
+</ul>
+
+
+<!--div class="view-animate-container">
+    <div ng-view class="view-animate"></div>
+</div-->
+<div ng-view class="page {{ pageClass }}" ></div>
+
+<a class="button" id="toList" style="display:none;" href="#!list">list</a>
+
+<a href="#/!" class="button" id="toMain" style="display:none;">Main</a>
+<a href="#!detail" class="button" id="toDetail" style="display:none;">Detail</a>
+<a href="#!favorList" class="button" id="toFavor" style="display:none;">Detail</a>
+<div id="getDetailPseudoMap" style="display:none"></div>
+
+</body>
+</html>

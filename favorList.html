@@ -1,0 +1,80 @@
+<div ng-hide="showProgressBar">
+<div ng-hide="favors.length > 0" class="alert alert-warning alertsp" role="alert">
+    No records.
+</div>
+
+<div class="container" ng-show="favors.length > 0" >
+
+    <!--ul class="nav nav-pills">
+        <li><a href="#!list">Results</a></li>
+        <li class="active"><a>Favorites</a></li>
+
+    </ul-->
+    <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';" style="float: right;margin-bottom: 20px; background:white;" class="btn btn-light border"  ng-disabled="!highlightedPlaceId"  ng-click="toDetailFromList()" id="reDoDetail">Details></button>
+    <div  style=" width:100%;white-space:nowrap;overflow:auto;" id="favorTableContainner" >
+    <table class="table table-hover" style="font-size:13px;">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Delete</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="repeatList1" ng-style="highlightedPlaceId==placeJsonF.place_id? {'background-color' : '#fdde95'} : {}" ng-repeat="placeJsonF in cpFavors">
+
+            <td style="vertical-align: middle;">
+                <span>{{cpFavors.indexOf(placeJsonF)+1}}</span>
+
+            </td>
+            <td style="vertical-align: middle;">
+                <img ng-src="{{placeJsonF.icon}}" height="42" width="42">
+
+            </td>
+            <td style="vertical-align: middle;">
+                <span>{{placeJsonF.name}}</span>
+            </td>
+            <td style="vertical-align: middle;">
+                <span>{{placeJsonF.vicinity}}</span>
+            </td>
+            <td style="vertical-align: middle;">
+                <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';" ng-click='RFavor(favors.indexOf(placeJsonF))'style="background-color:white;border: 2px solid gray; text-align: center; vertical-align: middle; display: table-cell; width:40px; height:40px">
+                <i class="far fa-trash-alt"></i>
+                </button>
+
+            </td>
+            <td style="vertical-align: middle;">
+                <a href="#!detail" class="button" id="toDetail" style="display:none;">Detail</a>
+                <a>
+                    <button onmouseover="this.style.background='lightgray';" onmouseout="this.style.background='white';" class="btn btn-default" ng-click="setAniClassDetail(placeJsonF)" style="background-color:white;border: 2px solid gray; text-align: center; vertical-align: middle; display: table-cell; width:40px; height:40px">
+                        <i class="fas fa-angle-right"></i>
+
+                    </button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div style="text-align:center; margin:0 auto;">
+
+        <button class="btn btn-light border fadeR" style="width:90px; background:white;" id="prevF" ng-show="currentPageF > 0" ng-click="prevPageF()">Previous</button>
+
+        <button class="btn btn-light border fadeR" style="width:90px; background:white;" id="nextF" ng-show="currentPageF < maxPageIndexF" ng-click="nextPageF()">Next</button>
+    </div>
+
+
+
+</div>
+</div>
+
+<div ng-show="showProgressBar">
+    <div style="width:80%; margin:0 auto;" class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+    </div>
+    <div style="height:500px;"></div>
+</div>
